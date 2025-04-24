@@ -1,0 +1,1 @@
+#include "chesspiece.h"
