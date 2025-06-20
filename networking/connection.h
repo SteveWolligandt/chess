@@ -1,1 +1,6 @@
-#include <asio.h>
+#include <asio.hpp>
+
+class connection
+{
+
+};
