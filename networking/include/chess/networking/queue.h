@@ -1,14 +1,16 @@
 #include <deque>
 #include <mutex>
-#include <thread>
-
+//==============================================================================
+namespace chess::networking {
+//==============================================================================
 template <typename T>
-class queue{
+class queue {
   std::deque<T> m_data;
-  std::mutex m_mutex;
+  std::mutex    m_mutex;
 
  public:
   queue() = default;
+
   ~queue() {
     clear();
   }
@@ -35,26 +37,29 @@ class queue{
   }
 
  public:
-  T const& dequeue(T item) {
+  void dequeue() {
     pop_front();
   }
 
-  T const& enqueue(T item) {
+  void enqueue(T item) {
     push_back(std::move(item));
   }
 
   T const& back() {
     std::scoped_lock l{m_mutex};
-    m_data.back();
+    return m_data.back();
   }
 
   T const& front() {
     std::scoped_lock l{m_mutex};
-    m_data.front();
+    return m_data.front();
   }
   
-  T const& clear() {
+  void clear() {
     std::scoped_lock l{m_mutex};
     m_data.clear();
   }
 };
+//==============================================================================
+} // namespace chess::networking
+//==============================================================================

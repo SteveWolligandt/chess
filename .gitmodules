@@ -1,3 +1,6 @@
 [submodule "ext/asio"]
 	path = ext/asio
 	url = https://github.com/chriskohlhoff/asio.git
+[submodule "ext/catch2"]
+	path = ext/catch2
+	url = https://github.com/catchorg/Catch2.git

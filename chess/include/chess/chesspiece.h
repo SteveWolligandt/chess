@@ -1,6 +1,7 @@
 #pragma once
 
 #include "networkinstance.h"
+
 namespace chess {
 class chess_board;
 
