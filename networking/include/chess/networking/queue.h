@@ -1,3 +1,5 @@
+#pragma once
+//==============================================================================
 #include <deque>
 #include <mutex>
 //==============================================================================
@@ -5,9 +7,6 @@ namespace chess::networking {
 //==============================================================================
 template <typename T>
 class queue {
-  std::deque<T> m_data;
-  std::mutex    m_mutex;
-
  public:
   queue() = default;
 
@@ -19,6 +18,11 @@ class queue {
   void push_back(T item) {
     std::scoped_lock l{m_mutex};
     m_data.push_back(std::move(item));
+  }
+
+  void emplace_back(auto &&...args) {
+    std::scoped_lock l{m_mutex};
+    m_data.emplace_back(std::forward<decltype(args)>(args)...);
   }
 
   void pop_back() {
@@ -41,6 +45,10 @@ class queue {
     pop_front();
   }
 
+  void enqueue_emplaced(auto &&... args) {
+    emplace_back(std::forward<decltype(args)>(args)...);
+  }
+
   void enqueue(T item) {
     push_back(std::move(item));
   }
@@ -59,6 +67,19 @@ class queue {
     std::scoped_lock l{m_mutex};
     m_data.clear();
   }
+
+  auto empty() const {
+    return m_data.empty();
+  }
+
+  auto size() const {
+    return m_data.size();
+  }
+
+ private:
+  std::deque<T> m_data;
+  std::mutex    m_mutex;
+
 };
 //==============================================================================
 } // namespace chess::networking

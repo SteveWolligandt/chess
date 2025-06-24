@@ -50,7 +50,7 @@ require("overseer").register_template({
 })
 
 require("overseer").register_template({
-  name = "Build networking test",
+  name = "Run networking test",
   params = {},
   condition = {
     -- This makes the template only available in the current directory
@@ -59,9 +59,9 @@ require("overseer").register_template({
   },
   builder = function()
     return {
-      name = "Build networking",
+      name = "Run networking test",
       cmd = "cmake",
-      args = {"--build","build","--target","networking_test"},
+      args = {"--build","build","--target","networking.test.run"},
     }
   end,
 })
